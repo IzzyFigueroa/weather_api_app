@@ -29,7 +29,7 @@ class WeatherService {
     // return the array of of 40 weather objects
 
     // BONUS: filter the array of 40 objects down to just objects that have a dt_txt that includes '12:00'
-    return res.data.list.filter((weatherObj: any);
+    return res.data.list.filter((weatherObj: any));
 
   }
 

@@ -32,13 +32,12 @@ class HistoryService {
   async getCities() {
     // Get the array of cites, using the read method
     const cityArray = await this.read();
-    // Use a .map() on the array you get from this.read() and convert each object to a City object, using the City class above
-    const cityObjects = cityArray.map((cityObj) => {
-      // return a new City() object, passing the properties id and name from the cityObj above
-    });
+   
+    return cityArray;
+    };
     
-    return cityObjects;
-  }
+    return cityArray;
+  
 
   // TODO Define an addCity method that adds a city to the db.json file
   async addCity(city: string) {

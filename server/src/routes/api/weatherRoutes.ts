@@ -11,6 +11,7 @@ try {
   const cityName = req.body.cityName;
   // req.body.cityName is the city value that the user searched for in the browser form input
   const currentData = await weatherService.getCurrentWeatherForCity(cityName);
+  console.log('current weather', currentData)
   // Create a variable forecastData that stores the forecast data, using the weatherService.getForecastWeatherForCity()
   const forecastData = await weatherService.getForecastWeatherForCity(cityName);
 

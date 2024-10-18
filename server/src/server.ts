@@ -1,9 +1,14 @@
 import dotenv from 'dotenv';
 import express from 'express';
-dotenv.config();
+
+import path from 'path';
+import routes from './routes/index.js';
+
+dotenv.config({
+    path: path.resolve(__dirname, '../../.env')
+});
 
 // Import the routes
-import routes from './routes/index.js';
 
 const app = express();
 

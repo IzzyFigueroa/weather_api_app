@@ -1,12 +1,10 @@
-import dotenv from 'dotenv';
+
 import express from 'express';
 
-import path from 'path';
+// import path from 'path';
 import routes from './routes/index.js';
 
-dotenv.config({
-    path: path.resolve(__dirname, '../../.env')
-});
+
 
 // Import the routes
 
@@ -15,7 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // TODO: Serve static files of entire client dist folder
-app.use(express.static('client/dist'));
+app.use(express.static('../client/dist'));
 // TODO: Implement middleware for parsing JSON and urlencoded form data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));

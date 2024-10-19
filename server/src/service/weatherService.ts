@@ -1,8 +1,9 @@
 import dotenv from 'dotenv';
 import axios from 'axios';
 
-dotenv.config();
+
 import dayjs from 'dayjs';
+dotenv.config();
 // Import axios to make our http requests to the OpenWeatherMap API
 
 
@@ -21,14 +22,14 @@ class WeatherService {
     this.apiKey = process.env.API_KEY || '';
   }
 
-  async fetchLocationData(city: string) {
-    const url = this.baseURL + `/weather?units=imperial&q=${city}&appid=${this.apiKey}`;
-    const res = await axios.get(url);
-    console.log('SOMETHING', res.data)
-    return res.data;
-   
+  // async fetchLocationData(city: string) {
+  //   const url = this.baseURL + `/weather?units=imperial&q=${city}&appid=${this.apiKey}`;
+  //   const res = await axios.get(url);
+  //   console.log('SOMETHING', res.data)
+  //   return res.data;
 
-  }
+
+  // }
 
   // TODO: Create fetchLocationData method
   async getForecastWeatherForCity(city: string) {
@@ -51,6 +52,7 @@ class WeatherService {
     });
 
 
+
     const weatherData = filtered.map((weatherObj: any) => {
       return {
         city: city, // this is completed for you as an example
@@ -60,7 +62,7 @@ class WeatherService {
         tempF: weatherObj.main.temp,
         windSpeed: weatherObj.wind.speed,
         humidity: weatherObj.main.humidity
-      };
+      }
     });
     return weatherData
   }
@@ -78,19 +80,19 @@ class WeatherService {
 
     // Create a data object from the weather data you receive
     const data = {
-    city: res.data.name,
-       // this is completed for you as an example
-        date: dayjs(res.data.dt * 1000).format('MM/DD/YYYY'), // Use the already installed dayjs package to convert res.data.dt * 1000 into a formatted date like '10/17/2024'
-          icon: res.data.weather[0].icon,
-            iconDescription: res.data.weather[0].description,
-              tempF: res.data.main.temp,
-                windSpeed: res.data.wind.speed,
-                  humidity: res.data.main.humidity
-  };
+      city: res.data.name,
+      // this is completed for you as an example
+      date: dayjs(res.data.dt * 1000).format('MM/DD/YYYY'), // Use the already installed dayjs package to convert res.data.dt * 1000 into a formatted date like '10/17/2024'
+      icon: res.data.weather[0].icon,
+      iconDescription: res.data.weather[0].description,
+      tempF: res.data.main.temp,
+      windSpeed: res.data.wind.speed,
+      humidity: res.data.main.humidity
+    };
 
-  // Return the custom data object of weather information
-return data;
-}
+    // Return the custom data object of weather information
+    return data;
+  }
 }
 
 // Export a constructed/instatiated object, using our WeatherService class above

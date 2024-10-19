@@ -16,18 +16,19 @@ class City {
 
 // TODO: Complete the HistoryService class
 class HistoryService {
-  private dbFilePath: string
-  // TODO: Define a private read method that reads from the db.json file - this method will only be accessible within the HistoryService class
+
+  private dbFilePath: string;
+
   constructor() {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
-    this.dbFilePath = path.join(__dirname, '../../db/searhHistory.json')
+    this.dbFilePath = path.join(__dirname, '../../db/searchHistory.json');
   }
-
+  // private dbF÷
   private async read(): Promise<City[]> {
     // Use fs to read the db.json file
     const rawArray = await fs.readFile(this.dbFilePath, 'utf-8');
-    const cityArray:City[]=JSON.parse(rawArray)
+    const cityArray: City[] = JSON.parse(rawArray)
     // Using fs will give you unparsed JSON data array
     return cityArray;
     // return the parsed array - ie. JSON.parse(rawArray);
@@ -37,7 +38,7 @@ class HistoryService {
   private async write(cities: City[]): Promise<void> {
     try {
     const data = JSON.stringify(cities, null, 2);
-    await fs.writeFile(this.dbFilePath, data);
+    await fs.writeFile(this.dbFilePath, data, 'utf-8');
     // Use fs to overwrite the db.json file with the stringified array of city objects
   }catch (error) {
     console.log('Error writing this file');
@@ -48,6 +49,8 @@ class HistoryService {
   async getCities() {
     // Get the array of cites, using the read method
     const cityArray = await this.read();
+   
+
 
     return cityArray;
   };
@@ -59,7 +62,7 @@ class HistoryService {
   async addCity(city: string) {
     // Get the array of city objects from db.json, using this.read
     const citiesArray = await this.getCities();
-    if (citiesArray.find((c: City) => c.name === city)) {
+    if (citiesArray.find((cityList: City) => cityList.name === city)) {
       return;
     }
     const newCity = new City(city);
@@ -76,21 +79,20 @@ class HistoryService {
   // Push the new city object to the citiesArray above
 
   // Use this.write to overwrite the db.json file with our new array of city objects
+   async removeCity(id: string) {
+  //   // Get the cities array
+     const citiesArray = await this.getCities();
+
+  //   // Filter out the city object within citiesArray that has an id matching the id above
+     const filterCity = citiesArray.filter((city: City) => city.id !== id);
+
+  //   // Save the updated cities array back to the db.json file
+    await this.write(filterCity);
+
+    // console.log a confirmation that the city has been removed
+     console.log(`City with id ${id} has been removed.`);
+  }
 }
-
-// async removeCity(id: string) {
-//   // Get the cities array
-//   const citiesArray = await this.getCities();
-
-//   // Filter out the city object within citiesArray that has an id matching the id above
-//   const updatedCitiesArray = citiesArray.filter(city => city.id !== id);
-
-//   // Save the updated cities array back to the db.json file
-//   await this.saveCities(updatedCitiesArray);
-
-//   // console.log a confirmation that the city has been removed
-//   console.log(`City with id ${id} has been removed.`);
-// }
 
 
 export default new HistoryService();

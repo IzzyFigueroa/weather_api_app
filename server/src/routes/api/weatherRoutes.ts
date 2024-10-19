@@ -6,12 +6,12 @@ import weatherService from '../../service/weatherService.js';
 
 // TODO: POST Request with city name to retrieve weather data
 router.post('/', async (req: Request, res: Response) => {
-try {
+
   // Use the weatherService object to retrieve both current weather and forecast weather for the city the user searched for
   // const cityName = req.body.cityName;
   // req.body.cityName is the city value that the user searched for in the browser form input
   const currentData = await weatherService.getCurrentWeatherForCity(req.body.cityName);
-  console.log('current weather', currentData)
+  
   // Create a variable forecastData that stores the forecast data, using the weatherService.getForecastWeatherForCity()
   const forecastData = await weatherService.getForecastWeatherForCity(req.body.cityName);
 
@@ -23,28 +23,26 @@ try {
   await historyService.addCity(req.body.cityName);
 
   res.json(weatherData);
-} catch (error) {
-  res.status(500).json({ error: 'Failed to retrieve weather data' });
-}
+
 });
 
 // // TODO: GET search history
 
 // Use the historyService.getCities() to retreive the cities array of objects
 router.get('/history', async (_: Request, res: Response) => {
-  try {
+  
     const cities = await historyService.getCities();
     res.json(cities);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to retrieve search history' });
-  }
+  
   // Send back a json response of the city object array
 });
 
-// // * BONUS TODO: DELETE city from search history
-// router.delete('/history/:id', async (req: Request, res: Response) => {
-//   // Use the historyService.removeCity() to remove a city by id 
-//   // You can use req.params.id to get the id of the city the user wants to remove
-// });
+// * BONUS TODO: DELETE city from search history
+router.delete('/history/:id', async (req: Request, res: Response) => {
+  await historyService.removeCity(req.params.id);
+  res.status(204).send();
+  // Use the historyService.removeCity() to remove a city by id 
+  // You can use req.params.id to get the id of the city the user wants to remove
+});
 
 export default router;

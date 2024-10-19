@@ -59,8 +59,7 @@ class HistoryService {
   async addCity(city: string) {
     // Get the array of city objects from db.json, using this.read
     const citiesArray = await this.getCities();
-    const existingCity = citiesArray.find((c: City) => c.name === city)
-    if (existingCity) {
+    if (citiesArray.find((c: City) => c.name === city)) {
       return;
     }
     const newCity = new City(city);

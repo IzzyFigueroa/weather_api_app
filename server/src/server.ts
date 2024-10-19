@@ -16,7 +16,7 @@ app.use(express.static('../client/dist'))
 app.use(express.json());
 
 
-// TODO: Implement middleware to connect the routes
+
 app.use(routes);
 
 // Start the server on the port

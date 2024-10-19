@@ -55,8 +55,8 @@ class WeatherService {
 
     const weatherData = filtered.map((weatherObj: any) => {
       return {
-        city: city, // this is completed for you as an example
-        date: dayjs(weatherObj.dt * 1000).format('MM/DD/YYYY'), // Use the already installed dayjs package to convert res.data.dt * 1000 into a formatted date like '10/17/2024'
+        city: city,
+        date: dayjs(weatherObj.dt * 1000).format('MM/DD/YYYY'),
         icon: weatherObj.weather[0].icon,
         iconDescription: weatherObj.weather[0].description,
         tempF: weatherObj.main.temp,
@@ -71,18 +71,18 @@ class WeatherService {
   async getCurrentWeatherForCity(city: string) {
     console.log('HELLOHELLO', process.env.API_BASE_URL)
 
-    // Create the url variable using this.baseURL + '/weather', a query parameter of 'units' set to imperial, a query parameter of 'q' set to the city parameter above and a query parameter of appid set to this.apiKey
+
     const url = this.baseURL + `/weather?units=imperial&q=${city}&appid=${this.apiKey}`;
 
-    // Make a fetch request to OpenWeatherMap using the url constructed above
+
     const res = await axios.get(url);
 
 
-    // Create a data object from the weather data you receive
+
     const data = {
       city: res.data.name,
       // this is completed for you as an example
-      date: dayjs(res.data.dt * 1000).format('MM/DD/YYYY'), // Use the already installed dayjs package to convert res.data.dt * 1000 into a formatted date like '10/17/2024'
+      date: dayjs(res.data.dt * 1000).format('MM/DD/YYYY'),
       icon: res.data.weather[0].icon,
       iconDescription: res.data.weather[0].description,
       tempF: res.data.main.temp,
@@ -90,10 +90,10 @@ class WeatherService {
       humidity: res.data.main.humidity
     };
 
-    // Return the custom data object of weather information
+
     return data;
   }
 }
 
-// Export a constructed/instatiated object, using our WeatherService class above
+
 export default new WeatherService();
